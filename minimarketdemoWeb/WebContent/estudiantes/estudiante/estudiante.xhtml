@@ -102,9 +102,6 @@
 					<h:outputText value="#{estudiante.fechaNacimiento}"
 						pattern="dd/MM/yyyy" />
 				</p:column>
-
-
-
 				<p:column headerText="Acciones">
 					<!-- Botón Editar -->
 					<p:commandButton icon="pi pi-pencil" title="Editar"
@@ -170,10 +167,7 @@
 				action="#{beanEstudiante.actualizarEstudiante}"
 				update=":tableEstudiantes, :mensajes"
 				oncomplete="PF('dialogEditarEstudiante').hide();" />
-
 		</h:form>
 	</p:dialog>
-
-
 </body>
 </html>

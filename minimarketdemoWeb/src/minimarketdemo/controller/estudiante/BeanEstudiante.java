@@ -138,5 +138,4 @@ public class BeanEstudiante implements Serializable {
 					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No se pudo cargar el estudiante."));
 		}
 	}
-
 }

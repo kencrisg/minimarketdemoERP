@@ -14,7 +14,6 @@
 	<title>CRUD Ciudades</title>
 </h:head>
 <body>
-	<!-- Menú de navegación -->
 	<h:form>
 		<p:menubar>
 			<p:menuitem value="Regresar" icon="pi pi-home"
@@ -29,11 +28,9 @@
 			</f:facet>
 		</p:menubar>
 	</h:form>
-
 	<!-- Mensajes informativos -->
 	<p:growl id="mensajes" showDetail="true" sticky="false" life="3000"
 		autoUpdate="true" />
-
 	<!-- Formulario de Ciudades -->
 	<h:form id="formCiudades">
 		<p:panel header="Datos de la Ciudad">
@@ -45,7 +42,6 @@
 				<h:outputLabel for="codigoPostal" value="Código Postal:" />
 				<h:inputText id="codigoPostal"
 					value="#{beanCiudad.ciudad.codigoPostal}" required="true" />
-
 				<!-- Botones del CRUD -->
 				<p:commandButton value="Crear" icon="pi pi-plus"
 					action="#{beanCiudad.crearCiudad}"
@@ -53,7 +49,6 @@
 			</h:panelGrid>
 		</p:panel>
 	</h:form>
-
 	<!-- Tabla de Ciudades -->
 	<h:form id="tableCiudades">
 		<p:panel header="Lista de Ciudades">
@@ -85,7 +80,6 @@
 			</p:dataTable>
 		</p:panel>
 	</h:form>
-
 	<!-- Dialog para Editar Ciudad -->
 	<p:dialog id="dialogEditarCiudad" header="Editar Ciudad"
 		widgetVar="dialogEditarCiudad" modal="true" showEffect="fade"
@@ -100,7 +94,6 @@
 				<h:inputText id="codigoPostalEdit"
 					value="#{beanCiudad.ciudad.codigoPostal}" required="true" />
 			</h:panelGrid>
-
 			<!-- Botones del Dialog -->
 			<p:commandButton value="Guardar" icon="pi pi-save"
 				styleClass="ui-button-success"

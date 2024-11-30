@@ -16,7 +16,7 @@ import java.util.List;
 public class BeanCiudad implements Serializable {
 
 	@Inject
-	private ManagerCiudad managerCiudad; // Para las operaciones CRUD de ciudades
+	private ManagerCiudad managerCiudad; 
 
 	private EstCiudad ciudad;
 	private List<EstCiudad> listaCiudades;
@@ -25,7 +25,6 @@ public class BeanCiudad implements Serializable {
 		ciudad = new EstCiudad();
 	}
 
-	// Getter y Setter
 	public EstCiudad getCiudad() {
 		return ciudad;
 	}
@@ -39,15 +38,14 @@ public class BeanCiudad implements Serializable {
 		return listaCiudades;
 	}
 
-	// Métodos CRUD para Ciudad
 	public String crearCiudad() {
 		if (ciudad != null) {
 			managerCiudad.crearCiudad(ciudad.getNombre(), ciudad.getCodigoPostal());
-			ciudad = new EstCiudad(); // Reseteamos el objeto para un nuevo registro
+			ciudad = new EstCiudad();
 			FacesContext.getCurrentInstance().addMessage(null,
 					new FacesMessage(FacesMessage.SEVERITY_INFO, "Éxito", "Ciudad creada correctamente."));
 		}
-		return null; // Permanece en la misma página
+		return null;
 	}
 
 	public String actualizarCiudad() {
@@ -56,7 +54,7 @@ public class BeanCiudad implements Serializable {
 			FacesContext.getCurrentInstance().addMessage(null,
 					new FacesMessage(FacesMessage.SEVERITY_INFO, "Éxito", "Ciudad actualizada correctamente."));
 		}
-		return null; // Permanece en la misma página
+		return null; 
 	}
 
 	public String eliminarCiudad(Integer id) {
@@ -65,10 +63,9 @@ public class BeanCiudad implements Serializable {
 			FacesContext.getCurrentInstance().addMessage(null,
 					new FacesMessage(FacesMessage.SEVERITY_INFO, "Éxito", "Ciudad eliminada correctamente."));
 		}
-		return null; // Permanece en la misma página
+		return null; 
 	}
 
-	// Método para pre-cargar los datos de una ciudad (por si se está actualizando)
 	public void cargarCiudad(Integer id) {
 		ciudad = managerCiudad.obtenerCiudadPorId(id);
 	}
