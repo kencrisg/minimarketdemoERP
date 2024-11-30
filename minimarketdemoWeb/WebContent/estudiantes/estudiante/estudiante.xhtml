@@ -72,38 +72,57 @@
 	</p:panel>
 	<h:form id="tableEstudiantes">
 		<p:panel>
-			<p:dataTable value="#{beanEstudiante.listaEstudiantes}"
-				var="estudiante" editable="true">
+			<p:dataTable id="tableEstudiantes" paginator="true" rows="10"
+				editable="true"
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				rowsPerPageTemplate="5,10,20"
+				currentPageReportTemplate="Mostrando {startRecord} - {endRecord} de {totalRecords} estudiantes"
+				value="#{beanEstudiante.listaEstudiantes}" var="estudiante"
+				sortMode="multiple" rowKey="#{estudiante.id}">
 				<p:column headerText="ID">
 					<h:outputText value="#{estudiante.id}" />
 				</p:column>
+
 				<p:column headerText="Nombre">
 					<h:outputText value="#{estudiante.nombre}" />
 				</p:column>
+
 				<p:column headerText="Apellido">
 					<h:outputText value="#{estudiante.apellido}" />
 				</p:column>
+
 				<p:column headerText="Correo">
 					<h:outputText value="#{estudiante.email}" />
 				</p:column>
+
 				<p:column headerText="Ciudad">
 					<h:outputText value="#{estudiante.estCiudad.nombre}" />
 				</p:column>
-				<p:column>
+				<p:column headerText="Fecha de Nacimiento">
+					<h:outputText value="#{estudiante.fechaNacimiento}"
+						pattern="dd/MM/yyyy" />
+				</p:column>
+
+
+
+				<p:column headerText="Acciones">
 					<!-- Botón Editar -->
 					<p:commandButton icon="pi pi-pencil" title="Editar"
+						styleClass="ui-button-success"
 						action="#{beanEstudiante.cargarEstudiante(estudiante.id)}"
 						update=":formEditarEstudiante"
 						oncomplete="PF('dialogEditarEstudiante').show();" />
+
 					<!-- Botón Eliminar -->
 					<p:commandButton icon="pi pi-times" styleClass="ui-button-danger"
+						title="Eliminar"
 						action="#{beanEstudiante.capturarEliminarEstudiante(estudiante.id)}"
-						update=":tableEstudiantes:menuEliminar, :mensajes"
-						oncomplete="PF('menu').show()" />
+						update=":tableEstudiantes, :mensajes"
+						oncomplete="PF('menu').show();" />
 				</p:column>
 			</p:dataTable>
-		</p:panel>
 
+		</p:panel>
 		<!-- Confirmación de eliminación -->
 		<p:confirmDialog message="¿Seguro deseas eliminar el estudiante?"
 			header="Eliminar Estudiante" severity="alert" widgetVar="menu"
@@ -147,10 +166,11 @@
 			</h:panelGrid>
 
 			<p:commandButton value="Guardar" icon="pi pi-save"
+				styleClass="ui-button-success"
 				action="#{beanEstudiante.actualizarEstudiante}"
 				update=":tableEstudiantes, :mensajes"
 				oncomplete="PF('dialogEditarEstudiante').hide();" />
-			
+
 		</h:form>
 	</p:dialog>
 

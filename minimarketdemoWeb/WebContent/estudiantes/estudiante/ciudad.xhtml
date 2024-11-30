@@ -1,0 +1,115 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<f:metadata>
+	<f:event listener="#{beanSegLogin.actionVerificarLogin()}"
+		type="preRenderView" />
+</f:metadata>
+
+<h:head>
+	<title>CRUD Ciudades</title>
+</h:head>
+<body>
+	<!-- Menú de navegación -->
+	<h:form>
+		<p:menubar>
+			<p:menuitem value="Regresar" icon="pi pi-home"
+				action="menu?faces-redirect=true" />
+			<f:facet name="options">
+				<p:menuButton value="#{beanSegLogin.loginDTO.correo}"
+					icon="pi pi-user">
+					<p:menuitem value="Perfil" icon="pi pi-cog" />
+					<p:menuitem value="Cerrar sesión" icon="pi pi-sign-out"
+						action="#{beanSegLogin.actionCerrarSesion()}" />
+				</p:menuButton>
+			</f:facet>
+		</p:menubar>
+	</h:form>
+
+	<!-- Mensajes informativos -->
+	<p:growl id="mensajes" showDetail="true" sticky="false" life="3000"
+		autoUpdate="true" />
+
+	<!-- Formulario de Ciudades -->
+	<h:form id="formCiudades">
+		<p:panel header="Datos de la Ciudad">
+			<h:panelGrid columns="2" columnClasses="label,field">
+				<h:outputLabel for="nombre" value="Nombre:" />
+				<h:inputText id="nombre" value="#{beanCiudad.ciudad.nombre}"
+					required="true" />
+
+				<h:outputLabel for="codigoPostal" value="Código Postal:" />
+				<h:inputText id="codigoPostal"
+					value="#{beanCiudad.ciudad.codigoPostal}" required="true" />
+
+				<!-- Botones del CRUD -->
+				<p:commandButton value="Crear" icon="pi pi-plus"
+					action="#{beanCiudad.crearCiudad}"
+					update=":formCiudades, :tableCiudades, :mensajes" />
+			</h:panelGrid>
+		</p:panel>
+	</h:form>
+
+	<!-- Tabla de Ciudades -->
+	<h:form id="tableCiudades">
+		<p:panel header="Lista de Ciudades">
+			<p:dataTable value="#{beanCiudad.listaCiudades}" var="ciudad"
+				paginator="true" rows="10" editable="true"
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				rowsPerPageTemplate="5,10,20"
+				currentPageReportTemplate="Mostrando {startRecord} - {endRecord} de {totalRecords} ciudades">
+				<p:column headerText="ID" >
+					<h:outputText value="#{ciudad.id}" />
+				</p:column>
+				<p:column headerText="Nombre">
+					<h:outputText value="#{ciudad.nombre}" />
+				</p:column>
+				<p:column headerText="Código Postal">
+					<h:outputText value="#{ciudad.codigoPostal}" />
+				</p:column>
+				<p:column>
+					<!-- Botones Editar/Eliminar -->
+					<p:commandButton icon="pi pi-pencil" title="Editar"
+						styleClass="ui-button-success"
+						action="#{beanCiudad.cargarCiudad(ciudad.id)}"
+						update=":formEditarCiudad"
+						oncomplete="PF('dialogEditarCiudad').show();" />
+					<p:commandButton icon="pi pi-times" styleClass="ui-button-danger"
+						action="#{beanCiudad.eliminarCiudad(ciudad.id)}"
+						update=":tableCiudades, :mensajes" />
+				</p:column>
+			</p:dataTable>
+		</p:panel>
+	</h:form>
+
+	<!-- Dialog para Editar Ciudad -->
+	<p:dialog id="dialogEditarCiudad" header="Editar Ciudad"
+		widgetVar="dialogEditarCiudad" modal="true" showEffect="fade"
+		hideEffect="fade">
+		<h:form id="formEditarCiudad">
+			<h:panelGrid columns="2" columnClasses="label,field">
+				<h:outputLabel for="nombreEdit" value="Nombre:" />
+				<h:inputText id="nombreEdit" value="#{beanCiudad.ciudad.nombre}"
+					required="true" />
+
+				<h:outputLabel for="codigoPostalEdit" value="Código Postal:" />
+				<h:inputText id="codigoPostalEdit"
+					value="#{beanCiudad.ciudad.codigoPostal}" required="true" />
+			</h:panelGrid>
+
+			<!-- Botones del Dialog -->
+			<p:commandButton value="Guardar" icon="pi pi-save"
+				styleClass="ui-button-success"
+				action="#{beanCiudad.actualizarCiudad}"
+				update=":tableCiudades, :mensajes"
+				oncomplete="PF('dialogEditarCiudad').hide();" />
+			<p:commandButton value="Cancelar" icon="pi pi-times"
+				onclick="PF('dialogEditarCiudad').hide();" type="button" />
+		</h:form>
+	</p:dialog>
+</body>
+</html>
