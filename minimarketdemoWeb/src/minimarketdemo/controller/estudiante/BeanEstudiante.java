@@ -100,7 +100,7 @@ public class BeanEstudiante implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, msg);
             e.printStackTrace();
         }
-        return null; // Permanece en la misma página después de ejecutar
+        return null;
     }
     
     public void actualizarEstudiante() {
@@ -119,26 +119,33 @@ public class BeanEstudiante implements Serializable {
         }
     }
 
-    public String eliminarEstudiante(Integer id) {
-        if (id != null) {
+    public void eliminarEstudiante(Integer id) {
+        try {
             managerEstudiante.eliminarEstudiante(id);
+            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, 
+                                                "Éxito", 
+                                                "Estudiante eliminado correctamente.");
+            FacesContext.getCurrentInstance().addMessage(null, msg);
+        } catch (Exception e) {
+            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, 
+                                                "Error", 
+                                                "No se pudo eliminar el estudiante: " + e.getMessage());
+            FacesContext.getCurrentInstance().addMessage(null, msg);
+            e.printStackTrace();
         }
-        return "listaEstudiantes?faces-redirect=true";
     }
-    public String eliminarEstudiante() {
-        return eliminarEstudiante(estudianteSeleccionado);
+    public void eliminarEstudiante() {
+        eliminarEstudiante(estudianteSeleccionado);
     }
     public String capturarEliminarEstudiante(Integer id) {
     	try {
-			//capturamos el valor enviado desde el DataTable:
 			estudianteSeleccionado = id;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return "";
     }
-
-    // Método para pre-cargar los datos de un estudiante (por si se está actualizando)
+    
     public void cargarEstudiante(Integer id) {
         estudiante = managerEstudiante.obtenerEstudiantePorId(id);
         if (estudiante == null) {
