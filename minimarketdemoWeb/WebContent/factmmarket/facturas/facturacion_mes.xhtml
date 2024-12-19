@@ -1,0 +1,56 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+<f:metadata>
+    <f:event listener="#{beanSegLogin.actionVerificarLogin()}" type="preRenderView" />
+</f:metadata>
+
+<h:head>
+    <title>Facturación por Mes</title>
+</h:head>
+<h:body>
+    <h:form>
+        <!-- Menú de navegación -->
+        <p:menubar>
+            <p:menuitem value="Regresar" icon="pi pi-home" action="/menu" />
+            <p:menuitem value="Facturas por Año" icon="pi pi-calendar" action="facturacion_anio?faces-redirect=true" />
+            <p:menuitem value="Facturas por Mes" icon="pi pi-calendar-times" action="facturacion_mes?faces-redirect=true" />
+            <p:menuitem value="Estado de Pedidos" icon="pi pi-box" action="estado_pedidos?faces-redirect=true" />
+            <f:facet name="options">
+                <p:menuButton value="#{beanSegLogin.loginDTO.correo}" icon="pi pi-user">
+                    <p:menuitem value="Perfil" icon="pi pi-cog"></p:menuitem>
+                    <p:menuitem value="Cerrar sesión" icon="pi pi-sign-out" action="#{beanSegLogin.actionCerrarSesion()}" />
+                </p:menuButton>
+            </f:facet>
+        </p:menubar>
+        <p:staticMessage severity="info" summary="Facturación por Mes"></p:staticMessage>
+    </h:form>
+
+    <!-- Tabla de facturación por mes -->
+    <h:form>
+        <p:dataTable value="#{beanFacturacion.listaFacturacionMes}" var="mes" paginator="true" rows="10">
+            <p:column headerText="Año">
+                #{mes.anio}
+            </p:column>
+            <p:column headerText="Total Emitidas">
+                #{mes.facEmitidas}
+            </p:column>
+            <p:column headerText="Mes">
+                #{mes.mes}
+            </p:column>
+            <p:column headerText="Total Facturado">
+                #{mes.valoresTotales}
+            </p:column>
+        </p:dataTable>
+    </h:form>
+
+    <!-- Gráfico de barras -->
+    <h:form>
+        <p:chart type="bar" model="#{beanFacturacion.chartFacturacionMes}" style="width:100%; height:400px;" />
+    </h:form>
+</h:body>
+</html>
